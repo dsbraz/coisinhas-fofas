@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %} clientes {% endblock %}
+
+{% block content %}
+
+<div>Listar Clientes</div>
+</br>
+<div>
+<table>
+	<tr>
+		<th>Nome</th>
+		<th>Email</th>
+		<th>Celular</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+	</tr>
+	{% for cliente in clientes %}
+		<tr>
+			<td><a href='/cliente/{{ cliente.key() }}'>{{ cliente.nome }}</a></td>
+			<td>{{ cliente.email }}</td>
+			<td>{{ cliente.celular }}</td>
+			<td><a href='/cliente/{{ cliente.key() }}/editar'>Editar</a></td>
+			<td><a href='/cliente/{{ cliente.key() }}/excluir'>Excluir</a></td>
+		</tr>
+	{% endfor %}
+</table>
+</div>
+</br>
+<div>
+	<a href='/cliente/novo'>Novo Cliente</a>
+</div>
+
+{% endblock %}

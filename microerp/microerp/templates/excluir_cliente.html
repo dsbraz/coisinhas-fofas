@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %} clientes {% endblock %}
+
+{% block content %}
+
+<div>Deseja excluir o cliente?</div>
+</br>
+<div>
+	Nome: {{ cliente.nome }}</br>
+	Telefone: {{ cliente.telefone }}</br>
+	Celular: {{ cliente.celular }}</br>
+	Email: {{ cliente.email }}</br>
+	IM: {{ cliente.im }}</br>
+	Endere&ccedil;o: {{ cliente.endereco }}</br>
+	Observa&ccedil;&atilde;o: {{ cliente.observacao }}
+</div>
+</br>
+<div>
+	<form action='/cliente/{{ cliente.key() }}/excluir' method='POST'>
+		<input type=submit value='Excluir'>
+	</form>
+</div>
+
+{% endblock %}

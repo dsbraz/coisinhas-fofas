@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %} pedidos {% endblock %}
+
+{% block content %}
+
+<div>Listar Pedidos</div>
+</br>
+<div>
+<table>
+	<tr>
+		<th>Entrega</th>
+		<th>Valor (R$)</th>
+		<th>Cliente</th>
+		<th>Finalizado?</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+	</tr>
+	{% for pedido in pedidos %}
+		<tr>
+			<td><a href='/pedido/{{ pedido.key() }}'>{{ pedido.data_entrega }}</a></td>
+			<td>{{ pedido.valor }}</td>
+			<td><a href='/cliente/{{ pedido.cliente.key() }}'>{{ pedido.cliente.nome }}</a></td>
+			{% if pedido.finalizado() %}
+				<td>Sim</td>
+			{% else %}
+				<td>N&atilde;o</td>
+			{% endif %}
+			<td><a href='/pedido/{{ pedido.key() }}/editar'>Editar</a></td>
+			<td><a href='/pedido/{{ pedido.key() }}/excluir'>Excluir</a></td>
+		</tr>
+	{% endfor %}
+</table>
+</div>
+</br>
+<div>
+	<a href='/pedido/novo'>Novo Pedido</a>
+</div>
+
+{% endblock %}

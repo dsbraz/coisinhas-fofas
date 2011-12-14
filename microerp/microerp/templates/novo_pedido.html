@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %} pedidos {% endblock %}
+
+{% block content %}
+
+<div>Novo Pedido</div>
+</br>
+<div>
+	<form action='/pedido/novo' method='POST'>
+		<fieldset>
+			<legend>Pedido</legend>
+			<label for='cliente'>Cliente</label>
+			<select id='cliente.chave' name='cliente.chave'>
+				<option value=''>Selecione..</option>
+				{% for cliente in clientes %}
+					<option value='{{ cliente.key() }}'>{{ cliente.nome }}</option>
+					{% endfor %}
+				</select></br>
+				<label for='descricao'>Descri&ccedil;&atilde;o</label>
+				<input type='text' id='descricao' name='descricao' value=''></br>
+				<label for='valor'>Valor R$</label>
+				<input type='text' id='valor' name='valor' value=''></br>
+				<label for='data_entrega'>Data de Entrega</label>
+				<input type='text' id='data_entrega' name='data_entrega' value=''></br>
+				<label for='pago'>Pedido Pago?</label>
+				<input type='radio' id='pago' name='pago' value='N' checked>N&atilde;o
+				<input type='radio' id='pago' name='pago' value='S'>Sim</br>
+		</fieldset>
+		<fieldset>
+			<legend>Produ&ccedil;&atilde;o</legend>
+			<label for='pago'>Arte Pronta?</label>
+			<input type='radio' id='producao.arte_pronta' name='producao.arte_pronta' value='n' checked>N&atilde;o
+			<input type='radio' id='producao.arte_pronta' name='producao.arte_pronta' value='S'>Sim</br>
+			<label for='pago'>Impresso?</label>
+			<input type='radio' id='producao.impresso' name='producao.impresso' value='N' checked>N&atilde;o
+			<input type='radio' id='producao.impresso' name='producao.impresso' value='S'>Sim</br>
+			<label for='pago'>Montado?</label>
+			<input type='radio' id='producao.montado' name='producao.montado' value='N' checked>N&atilde;o
+			<input type='radio' id='producao.montado' name='producao.montado' value='S'>Sim
+		</fieldset>
+		<fieldset>
+			<legend>Entrega</legend>
+			<label for='pago'>Enviado?</label>
+			<input type='radio' id='entrega.enviado' name='entrega.enviado' value='N' checked>N&atilde;o
+			<input type='radio' id='entrega.enviado' name='entrega.enviado' value='S'>Sim</br>
+			<label for='pago'>Recebido?</label>
+			<input type='radio' id='entrega.recebido' name='entrega.recebido' value='N' checked>N&atilde;o
+			<input type='radio' id='entrega.recebido' name='entrega.recebido' value='S'>Sim</br>
+		</fieldset>
+		<input type='submit' value='Salvar'>
+		<input type='reset' value='Limpar'>
+	</form>
+</div>
+
+{% endblock %}

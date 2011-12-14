@@ -1,0 +1,7 @@
+*.*~
+*.pyc
+*.tmproj
+env/
+flask/
+jinja2/
+werkzeug/
