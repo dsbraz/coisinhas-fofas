@@ -83,6 +83,8 @@ def excluir_pedido(chave):
     return render_template('excluir_pedido.html', pedido=pedido)
   else:
     pedido = Pedido.get(chave)
+    pedido.producao.delete()
+    pedido.entrega.delete()
     pedido.delete()
     flash('Pedido excluido com sucesso!')
     return redirect(url_for('listar_pedidos'))
