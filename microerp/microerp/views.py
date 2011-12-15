@@ -80,8 +80,29 @@ def detalhar_pedido(chave):
 def editar_pedido(chave):
   if request.method == 'GET':
     pedido = Pedido.get(chave)
-    return render_template('editar_pedido.html', pedido=pedido)
+    clientes_query = Cliente.all().ancestor(cliente_key()).order('nome')
+    clientes = clientes_query.run()
+    return render_template('editar_pedido.html', pedido=pedido, clientes=clientes)
   else:
+    pedido = Pedido.get(chave)
+    pedido.cliente = Cliente.get(request.form['cliente'])
+    pedido.descricao = request.form['descricao']
+    pedido.valor = request.form['valor']
+    pedido.data_entrega = date(*(time.strptime(request.form['data_entrega'], '%d/%M/%Y')[0:3]))
+    pedido.pago = request.form['pago'] == 'S'
+    pedido.put()
+
+    producao = pedido.producao
+    producao.arte_pronta = request.form['arte_pronta'] == 'S'
+    producao.impresso = request.form['impresso'] == 'S'
+    producao.montado = request.form['montado'] == 'S'
+    producao.put()
+
+    entrega = pedido.entrega
+    entrega.enviado = request.form['enviado'] == 'S'
+    entrega.recebido = request.form['recebido'] == 'S'
+    entrega.put()
+
     flash('Pedido alterado com sucesso!')
     return redirect(url_for('listar_pedidos'))
 
@@ -94,21 +115,21 @@ def novo_pedido():
   else:
     Pedido(
       parent = pedido_key(),
-      cliente = Cliente.get(request.form['cliente.chave']),
+      cliente = Cliente.get(request.form['cliente']),
       descricao = request.form['descricao'],
       valor = request.form['valor'],
       data_entrega = date(*(time.strptime(request.form['data_entrega'], '%d/%M/%Y')[0:3])),
       pago = request.form['pago'] == 'S',
       producao = Producao(
         parent = pedido_key(),
-        arte_pronta = request.form['producao.arte_pronta'] == 'S',
-        impresso = request.form['producao.impresso'] == 'S',
-        montado = request.form['producao.montado'] == 'S'
+        arte_pronta = request.form['arte_pronta'] == 'S',
+        impresso = request.form['impresso'] == 'S',
+        montado = request.form['montado'] == 'S'
       ).put(),
       entrega = Entrega(
         parent = pedido_key(),
-        enviado = request.form['entrega.enviado'] == 'S',
-        recebido = request.form['entrega.recebido'] == 'S'
+        enviado = request.form['enviado'] == 'S',
+        recebido = request.form['recebido'] == 'S'
       ).put()
     ).put()
     flash('Pedido criado com sucesso!')

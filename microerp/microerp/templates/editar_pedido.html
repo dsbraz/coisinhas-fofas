@@ -4,10 +4,10 @@
 
 {% block content %}
 
-<div>Novo Pedido</div>
+<div>Editar Pedido</div>
 </br>
 <div>
-	<form action='/pedido/novo' method='POST'>
+	<form action='/pedido/{{ pedido.key() }}/editar' method='POST'>
 		<fieldset>
 			<legend>Pedido</legend>
 			<label for='cliente'>Cliente</label>
@@ -52,5 +52,32 @@
 		<input type='reset' value='Limpar'>
 	</form>
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#cliente").val("{{ pedido.cliente.key() }}");
+		$("descricao").val("{{ pedido.descricao }} ");
+		$("valor").val("{{ pedido.valor }} ");
+		$("data_entrega").val("{{ pedido.data_entrega }} ");
+		{% if pedido.pago %}
+			$("#pago").attr("checked", "checked");
+		{% endif %}
+		{% if pedido.producao.arte_pronta %}
+			$("#arte_pronta").attr("checked", "checked");
+		{% endif %}
+		{% if pedido.producao.impresso %}
+			$("#impresso").attr("checked", "checked");
+		{% endif %}
+		{% if pedido.producao.montado %}
+			$("#montado").attr("checked", "checked");
+		{% endif %}
+		{% if pedido.entrega.enviado %}
+			$("#enviado").attr("checked", "checked");
+		{% endif %}
+		{% if pedido.entrega.recebido %}
+			$("#recebido").attr("checked", "checked");
+		{% endif %}
+	});
+</script>
 
 {% endblock %}

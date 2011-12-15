@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layout.html" %}
 
 {% block title %} clientes {% endblock %}
 
@@ -9,22 +9,34 @@
 <div>
 	<form action='/cliente/{{ cliente.key() }}/editar' method='POST'>
 		<label for='nome'>Nome</label>
-		<input type='text' id='nome' name='nome' value='{{ cliente.nome }}'></br>
+		<input type='text' id='nome' name='nome' value=''></br>
 		<label for='telefone'>Telefone</label>
-		<input type='text' id='telfone' name='telefone' value='{{ cliente.telefone }}'></br>
+		<input type='text' id='telfone' name='telefone' value=''></br>
 		<label for='celular'>Celular</label>
-		<input type='text' id='celular' name='celular' value='{{ cliente.celular }}'></br>
+		<input type='text' id='celular' name='celular' value=''></br>
 		<label for='email'>Email</label>
-		<input type='text' id='email' name='email' value='{{ cliente.email }}'></br>
+		<input type='text' id='email' name='email' value=''></br>
 		<label for='im'>IM</label>
-		<input type='text' id='im' name='im' value='{{ cliente.im }}'></br>
+		<input type='text' id='im' name='im' value=''></br>
 		<label for='endereco'>Endere&ccedil;o</label>
-		<input type='text' id='endereco' name='endereco' value='{{ cliente.endereco }}'></br>
+		<input type='text' id='endereco' name='endereco' value=''></br>
 		<label for='observacao'>Observa&ccedil;&atilde;o</label>
-		<input type='text' id='observacao' name='observacao' value='{{ cliente.observacao }}'></br>
+		<input type='text' id='observacao' name='observacao' value=''></br>
 		<input type='submit' value='Salvar'>
 		<input type='reset' value='Limpar'>
 	</form>
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("nome").val("{{ cliente.nome }}");
+		$("telefone").val("{{ cliente.telefone }}");
+		$("celular").val("{{ cliente.celular }}");
+		$("email").val("{{ cliente.email }}");
+		$("im").val("{{ cliente.im }}");
+		$("endereco").val("{{ cliente.endereco }}");
+		$("observacao").val("{{ cliente.observacao }}");
+	});
+</script>
 
 {% endblock %}
