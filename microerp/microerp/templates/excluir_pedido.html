@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %} pedidos {% endblock %}
+
+{% block content %}
+
+<div>Deseja excluir o pedido?</div>
+</br>
+<div>
+	{% include '_detalhe_pedido.html' %}
+</div>
+</br>
+<div>
+	<form action='/pedido/{{ pedido.key() }}/excluir' method='POST'>
+		<input type=submit value='Excluir'>
+	</form>
+</div>
+
+{% endblock %}

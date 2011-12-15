@@ -7,25 +7,7 @@
 <div>Detalhar Pedido</div>
 </br>
 <div>
-	<fieldset>
-		<legend>Pedido</legend>
-		Cliente: <a href='/cliente/{{ pedido.cliente.key() }}'>{{ pedido.cliente.nome }}</a></br>
-		Descri&ccedil;&atilde;o: {{ pedido.descricao }}</br>
-		Valor: R$ {{ pedido.valor }}</br>
-		Entrega: {{ pedido.data_entrega }}</br>
-		Pago: {% if pedido.pago %} Sim {% else %} N&atilde;o {% endif %}
-	</fieldset>
-	<fieldset>
-		<legend>Produ&ccedil;&atilde;o</legend>
-		Arte Pronta: {% if pedido.producao.arte_pronta %} Sim {% else %} N&atilde;o {% endif %}</br>
-		Impresso: {% if pedido.producao.impresso %} Sim {% else %} N&atilde;o {% endif %}</br>
-		Montado: {% if pedido.producao.montado %} Sim {% else %} N&atilde;o {% endif %}
-	</fieldset>
-	<fieldset>
-		<legend>Entrega</legend>
-		Enviado: {% if pedido.entrega.enviado %} Sim {% else %} N&atilde;o {% endif %}</br>
-		Recebido: {% if pedido.entrega.recebido %} Sim {% else %} N&atilde;o {% endif %}
-	</fieldset>
+	{% include '_detalhe_pedido.html' %}
 </div>
 
 {% endblock %}

@@ -76,6 +76,17 @@ def detalhar_pedido(chave):
   pedido = Pedido.get(chave)
   return render_template('detalhar_pedido.html', pedido=pedido)
 
+@app.route('/pedido/<chave>/excluir', methods=['GET', 'POST'])
+def excluir_pedido(chave):
+  if request.method == 'GET':
+    pedido = Pedido.get(chave)
+    return render_template('excluir_pedido.html', pedido=pedido)
+  else:
+    pedido = Pedido.get(chave)
+    pedido.delete()
+    flash('Pedido excluido com sucesso!')
+    return redirect(url_for('listar_pedidos'))
+
 @app.route('/pedido/<chave>/editar', methods=['GET', 'POST'])
 def editar_pedido(chave):
   if request.method == 'GET':

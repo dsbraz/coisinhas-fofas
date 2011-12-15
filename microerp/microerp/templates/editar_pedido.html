@@ -8,57 +8,16 @@
 </br>
 <div>
 	<form action='/pedido/{{ pedido.key() }}/editar' method='POST'>
-		<fieldset>
-			<legend>Pedido</legend>
-			<label for='cliente'>Cliente</label>
-			<select id='cliente' name='cliente'>
-				<option value=''>Selecione..</option>
-				{% for cliente in clientes %}
-					<option value='{{ cliente.key() }}'>{{ cliente.nome }}</option>
-				{% endfor %}
-			</select></br>
-			<label for='descricao'>Descri&ccedil;&atilde;o</label>
-			<input type='text' id='descricao' name='descricao' value=''></br>
-			<label for='valor'>Valor R$</label>
-			<input type='text' id='valor' name='valor' value=''></br>
-			<label for='data_entrega'>Data de Entrega</label>
-			<input type='text' id='data_entrega' name='data_entrega' value=''></br>
-			<label for='pago'>Pedido Pago?</label>
-			<input type='radio' name='pago' value='N' checked>N&atilde;o
-			<input type='radio' id='pago' name='pago' value='S'>Sim</br>
-		</fieldset>
-		<fieldset>
-			<legend>Produ&ccedil;&atilde;o</legend>
-			<label for='arte_pronta'>Arte Pronta?</label>
-			<input type='radio' name='arte_pronta' value='N' checked>N&atilde;o
-			<input type='radio' id='arte_pronta' name='arte_pronta' value='S'>Sim</br>
-			<label for='impresso'>Impresso?</label>
-			<input type='radio' name='impresso' value='N' checked>N&atilde;o
-			<input type='radio' id='impresso' name='impresso' value='S'>Sim</br>
-			<label for='montado'>Montado?</label>
-			<input type='radio' name='montado' value='N' checked>N&atilde;o
-			<input type='radio' id='montado' name='montado' value='S'>Sim
-		</fieldset>
-		<fieldset>
-			<legend>Entrega</legend>
-			<label for='enviado'>Enviado?</label>
-			<input type='radio' name='enviado' value='N' checked>N&atilde;o
-			<input type='radio' id='enviado' name='enviado' value='S'>Sim</br>
-			<label for='recebido'>Recebido?</label>
-			<input type='radio' name='recebido' value='N' checked>N&atilde;o
-			<input type='radio' id='recebido' name='recebido' value='S'>Sim</br>
-		</fieldset>
-		<input type='submit' value='Salvar'>
-		<input type='reset' value='Limpar'>
+		{% include '_cadastro_pedido.html' %}
 	</form>
 </div>
 
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#cliente").val("{{ pedido.cliente.key() }}");
-		$("descricao").val("{{ pedido.descricao }} ");
-		$("valor").val("{{ pedido.valor }} ");
-		$("data_entrega").val("{{ pedido.data_entrega }} ");
+		$("#descricao").val("{{ pedido.descricao }} ");
+		$("#valor").val("{{ pedido.valor }} ");
+		$("#data_entrega").val("{{ pedido.data_entrega }} ");
 		{% if pedido.pago %}
 			$("#pago").attr("checked", "checked");
 		{% endif %}
