@@ -3,6 +3,14 @@ from models import Cliente, Pedido, Producao, Entrega, cliente_key, pedido_key
 from microerp import app
 from datetime import datetime
 
+def data_entrega_formatada_ptbr(self):
+  return self.data_entrega.strftime("%d/%m/%Y")
+
+Pedido.data_entrega_formatada = data_entrega_formatada_ptbr
+
+def date_from_str(str_date):
+  return datetime.strptime(str_date, '%d/%m/%Y').date()
+
 @app.route('/', methods=['GET'])
 def index(): return render_template('index.html')
 
@@ -100,7 +108,7 @@ def editar_pedido(chave):
     pedido.cliente = Cliente.get(request.form['cliente'])
     pedido.descricao = request.form['descricao']
     pedido.valor = request.form['valor']
-    pedido.data_entrega = datetime.strptime(request.form['data_entrega'], '%d/%m/%Y').date()
+    pedido.data_entrega = date_from_str(request.form['data_entrega'])
     pedido.pago = request.form['pago'] == 'S'
     pedido.put()
 
@@ -130,7 +138,7 @@ def novo_pedido():
       cliente = Cliente.get(request.form['cliente']),
       descricao = request.form['descricao'],
       valor = request.form['valor'],
-      data_entrega = datetime.strptime(request.form['data_entrega'], '%d/%m/%Y').date(),
+      data_entrega = date_from_str(request.form['data_entrega']),
       pago = request.form['pago'] == 'S',
       producao = Producao(
         parent = pedido_key(),

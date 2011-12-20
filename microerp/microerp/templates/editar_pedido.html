@@ -17,7 +17,7 @@
 		$("#cliente").val("{{ pedido.cliente.key() }}");
 		$("#descricao").val("{{ pedido.descricao }}");
 		$("#valor").val("{{ pedido.valor }} ");
-		$("#data_entrega").val($.format.date(new Date("{{ pedido.data_entrega }}" + " 00:00:00"), "dd/MM/yyyy"));
+		$("#data_entrega").val("{{ pedido.data_entrega_formatada() }}");
 		{% if pedido.pago %}
 			$("#pago").attr("checked", "checked");
 		{% endif %}

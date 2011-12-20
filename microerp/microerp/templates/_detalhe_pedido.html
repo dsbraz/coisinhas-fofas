@@ -3,7 +3,7 @@
 	Cliente: <a href='/cliente/{{ pedido.cliente.key() }}'>{{ pedido.cliente.nome }}</a></br>
 	Descri&ccedil;&atilde;o: {{ pedido.descricao }}</br>
 	Valor: R$ {{ pedido.valor }}</br>
-	Entrega: {{ pedido.data_entrega }}</br>
+	Entrega: {{ pedido.data_entrega_formatada() }}</br>
 	Pago: {% if pedido.pago %} Sim {% else %} N&atilde;o {% endif %}
 </fieldset>
 <fieldset>
