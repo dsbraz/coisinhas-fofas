@@ -1,8 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash
 from models import Cliente, Pedido, Producao, Entrega, cliente_key, pedido_key
 from microerp import app
-from datetime import date
-import time
+from datetime import datetime
 
 @app.route('/', methods=['GET'])
 def index(): return render_template('index.html')
@@ -101,7 +100,7 @@ def editar_pedido(chave):
     pedido.cliente = Cliente.get(request.form['cliente'])
     pedido.descricao = request.form['descricao']
     pedido.valor = request.form['valor']
-    pedido.data_entrega = date(*(time.strptime(request.form['data_entrega'], '%d/%M/%Y')[0:3]))
+    pedido.data_entrega = datetime.strptime(request.form['data_entrega'], '%d/%m/%Y').date()
     pedido.pago = request.form['pago'] == 'S'
     pedido.put()
 
@@ -131,7 +130,7 @@ def novo_pedido():
       cliente = Cliente.get(request.form['cliente']),
       descricao = request.form['descricao'],
       valor = request.form['valor'],
-      data_entrega = date(*(time.strptime(request.form['data_entrega'], '%d/%M/%Y')[0:3])),
+      data_entrega = datetime.strptime(request.form['data_entrega'], '%d/%m/%Y').date(),
       pago = request.form['pago'] == 'S',
       producao = Producao(
         parent = pedido_key(),

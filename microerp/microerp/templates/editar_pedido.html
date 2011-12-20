@@ -15,9 +15,9 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#cliente").val("{{ pedido.cliente.key() }}");
-		$("#descricao").val("{{ pedido.descricao }} ");
+		$("#descricao").val("{{ pedido.descricao }}");
 		$("#valor").val("{{ pedido.valor }} ");
-		$("#data_entrega").val("{{ pedido.data_entrega }} ");
+		$("#data_entrega").val($.format.date(new Date("{{ pedido.data_entrega }}" + " 00:00:00"), "dd/MM/yyyy"));
 		{% if pedido.pago %}
 			$("#pago").attr("checked", "checked");
 		{% endif %}
