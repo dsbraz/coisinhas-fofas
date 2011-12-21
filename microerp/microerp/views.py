@@ -1,10 +1,8 @@
 from flask import render_template, request, redirect, url_for, flash, request_started
 from models import Cliente, Pedido, Producao, Entrega, cliente_key, pedido_key
 from google.appengine.api import users
-from microerp import app
+from microerp import app, usr_autorizados
 from datetime import datetime
-
-usr_autorizados = ['dsbraz@gmail.com', 'fabiportella@gmail.com']
 
 def date_from_str(str_date): return datetime.strptime(str_date, '%d/%m/%Y').date()
 
@@ -14,7 +12,13 @@ def format_date(d): return d.strftime("%d/%m/%Y")
 @app.before_request
 def authorize():
   user = users.get_current_user()
-  if not user or user.email() not in usr_autorizados: raise Exception('Usuario invalido')
+  if not user or user.email() not in usuarios_autorizados: raise Exception('Usuario invalido')
+
+@app.errorhandler(404)
+def page_not_found(e): return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_server_error(e): return render_template('500.html'), 500
 
 @app.route('/', methods=['GET'])
 def index(): return render_template('index.html')
