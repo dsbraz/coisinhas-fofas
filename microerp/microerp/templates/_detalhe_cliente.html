@@ -1,7 +1,27 @@
-Nome: {{ cliente.nome }}</br>
-Telefone: {{ cliente.telefone }}</br>
-Celular: {{ cliente.celular }}</br>
-Email: {{ cliente.email }}</br>
-IM: {{ cliente.im }}</br>
-Endere&ccedil;o: {{ cliente.endereco }}</br>
-Observa&ccedil;&atilde;o: {{ cliente.observacao }}
+<p>
+	Nome: {{ cliente.nome }}</br>
+	Telefone: {{ cliente.telefone }}</br>
+	Celular: {{ cliente.celular }}</br>
+	Email: {{ cliente.email }}</br>
+	IM: {{ cliente.im }}</br>
+	Endere&ccedil;o: {{ cliente.endereco }}</br>
+	Observa&ccedil;&atilde;o: {{ cliente.observacao }}
+</p>
+
+<p>
+	<h2>Pedidos</h2>
+	<table>
+		<tr>
+			<th>Entrega</th>
+			<th>Valor (R$)</th>
+			<th>Finalizado?</th>
+		</tr>
+		{% for pedido in cliente.pedidos %}
+			<tr class="{% if pedido.finalizado() %} pedido_finalizado {% endif %}">
+				<td><a href='/pedido/{{ pedido.key() }}'>{{ pedido.data_entrega|format_date }}</a></td>
+				<td>{{ pedido.valor }}</td>
+				<td>{% if pedido.finalizado() %} Sim {% else %} N&atilde;o {% endif %}</td>
+			</tr>
+		{% endfor %}
+	</table>
+</p>

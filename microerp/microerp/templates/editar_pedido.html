@@ -4,13 +4,11 @@
 
 {% block content %}
 
-<div>Editar Pedido</div>
-</br>
-<div>
-	<form action='/pedido/{{ pedido.key() }}/editar' method='POST'>
-		{% include '_cadastro_pedido.html' %}
-	</form>
-</div>
+<h1>Editar Pedido</h1>
+
+<form action='/pedido/{{ pedido.key() }}/editar' method='POST'>
+	{% include '_cadastro_pedido.html' %}
+</form>
 
 <script type="text/javascript">
 	$(document).ready(function() {

@@ -4,17 +4,18 @@
 
 {% block content %}
 
-<div>Listar Pedidos</div>
-</br>
-<div>
+<h1>Listar Pedidos</h1>
+
+<input type="checkbox" id="mostrar_finalizados" checked>Mostrar Pedidos Finalizados
+
 <table>
 	<tr>
 		<th>Entrega</th>
 		<th>Valor (R$)</th>
 		<th>Cliente</th>
 		<th>Finalizado?</th>
-		<th>&nbsp;</th>
-		<th>&nbsp;</th>
+		<th class="action_column">&nbsp;</th>
+		<th class="action_column">&nbsp;</th>
 	</tr>
 	{% for pedido in pedidos %}
 		<tr class="{% if pedido.finalizado() %} pedido_finalizado {% endif %}">
@@ -27,10 +28,24 @@
 		</tr>
 	{% endfor %}
 </table>
-</div>
+
 </br>
-<div>
-	<a href='/pedido/novo'>Novo Pedido</a>
-</div>
+
+<a href='/pedido/novo'>Novo Pedido</a>
 
 {% endblock %}
+
+<script type="text/javascript">
+    $("#mostrar_finalizados").click(function () {
+        var show = $("#mostrar_finalizados").is(':checked');
+        if (show) {
+            $(".pedido_finalizado").each(function () {
+                $(this).css("display", "block");
+            });
+        } else {
+            $(".pedido_finalizado").each(function () {
+                $(this).css("display", "none");
+            });
+        }
+    });
+</script>

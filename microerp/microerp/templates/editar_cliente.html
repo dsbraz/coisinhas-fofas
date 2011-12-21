@@ -4,13 +4,11 @@
 
 {% block content %}
 
-<div>Editar Cliente</div>
-</br>
-<div>
-	<form action='/cliente/{{ cliente.key() }}/editar' method='POST'>
-		{% include '_cadastro_cliente.html' %}
-	</form>
-</div>
+<h1>Editar Cliente</h1>
+
+<form action='/cliente/{{ cliente.key() }}/editar' method='POST'>
+	{% include '_cadastro_cliente.html' %}
+</form>
 
 <script type="text/javascript">
 	$(document).ready(function() {

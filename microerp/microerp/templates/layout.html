@@ -9,13 +9,16 @@
         <title>MicroERP - {% block title %} {% endblock %}</title>
     </head>
     <body id="">
-		<div>
+		<div class="menu">
+			<span>&nbsp;</span>
 			<a href='/'>In&iacute;cio</a>
+			<span>|</span>
 			<a href='/cliente'>Clientes</a>
+			<span>|</span>
 			<a href='/pedido'>Pedidos</a>
 		</div>
 		</br>
-		<div>
+		<div class="message">
 			{% with messages = get_flashed_messages() %}
 		  		{% if messages %}
 		    		<ul class=flashes>
@@ -26,7 +29,7 @@
 		  		{% endif %}
 			{% endwith %}
 		</div>
-		<div>
+		<div class="content">
         	{% block content %}
         	{% endblock %}
 		</div>

@@ -1,4 +1,46 @@
 body {
-  font-family: Verdana, Helvetica, sans-serif;
-  background-color: #DDDDDD;
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 14px;
+	background-color: #EEEEEE;
+}
+
+h1 {
+	font-size: 16px;
+}
+
+h2 {
+	font-size: 14px;
+}
+
+table {
+	font-size: 14px;
+	border-width: 1px;
+	border-color: black;
+	border-style: dotted;
+}
+
+th {
+	background-color: #CCCCCC;
+}
+
+.menu {
+	line-height:2em;
+	vertical-align:middle;
+	font-size: 16px;
+	background-color: #CCCCCC;
+}
+
+.message {
+	color: red;	
+}
+
+.content {
+}
+
+.action_column {
+	background-color: #EEEEEE;
+}
+
+.pedido_finalizado {
+	background-color: #DDDDDD;	
 }

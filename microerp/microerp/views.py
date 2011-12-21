@@ -55,6 +55,9 @@ def excluir_cliente(chave):
     return render_template('excluir_cliente.html', cliente=cliente)
   else:
     cliente = Cliente.get(chave)
+    if cliente.pedidos.get():
+      flash('Cliente nao pode ser excluido, pois possui pedido(s) associado(s)')
+      return render_template('excluir_cliente.html', cliente=cliente)
     cliente.delete()
     flash('Cliente excluido com sucesso!')
     return redirect(url_for('listar_clientes'))

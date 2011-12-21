@@ -22,7 +22,7 @@ class Entrega(db.Model):
   def entregue(self): return self.enviado and self.recebido
 
 class Pedido(db.Model):
-  cliente = db.ReferenceProperty(Cliente, required=True)
+  cliente = db.ReferenceProperty(Cliente, collection_name='pedidos', required=True)
   descricao = db.TextProperty(required=True)
   valor = db.StringProperty(required=True)
   data_entrega = db.DateProperty(required=True)

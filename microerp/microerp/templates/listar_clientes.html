@@ -4,16 +4,15 @@
 
 {% block content %}
 
-<div>Listar Clientes</div>
-</br>
-<div>
+<h1>Listar Clientes</h1>
+
 <table>
 	<tr>
 		<th>Nome</th>
 		<th>Email</th>
 		<th>Celular</th>
-		<th>&nbsp;</th>
-		<th>&nbsp;</th>
+		<th class="action_column">&nbsp;</th>
+		<th class="action_column">&nbsp;</th>
 	</tr>
 	{% for cliente in clientes %}
 		<tr>
@@ -25,10 +24,9 @@
 		</tr>
 	{% endfor %}
 </table>
-</div>
+
 </br>
-<div>
-	<a href='/cliente/novo'>Novo Cliente</a>
-</div>
+
+<a href='/cliente/novo'>Novo Cliente</a>
 
 {% endblock %}

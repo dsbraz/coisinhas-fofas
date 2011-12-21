@@ -4,16 +4,12 @@
 
 {% block content %}
 
-<div>Deseja excluir o pedido?</div>
-</br>
-<div>
-	{% include '_detalhe_pedido.html' %}
-</div>
-</br>
-<div>
-	<form action='/pedido/{{ pedido.key() }}/excluir' method='POST'>
-		<input type=submit value='Excluir'>
-	</form>
-</div>
+<h1>Deseja excluir o pedido?</h1>
+
+{% include '_detalhe_pedido.html' %}
+
+<form action='/pedido/{{ pedido.key() }}/excluir' method='POST'>
+	<input type=submit value='Excluir'>
+</form>
 
 {% endblock %}
