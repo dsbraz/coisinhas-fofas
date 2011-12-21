@@ -1,15 +1,20 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, request_started
 from models import Cliente, Pedido, Producao, Entrega, cliente_key, pedido_key
+from google.appengine.api import users
 from microerp import app
 from datetime import datetime
 
-def data_entrega_formatada_ptbr(self):
-  return self.data_entrega.strftime("%d/%m/%Y")
+usr_autorizados = ['dsbraz@gmail.com', 'fabiportella@gmail.com']
 
-Pedido.data_entrega_formatada = data_entrega_formatada_ptbr
+def date_from_str(str_date): return datetime.strptime(str_date, '%d/%m/%Y').date()
 
-def date_from_str(str_date):
-  return datetime.strptime(str_date, '%d/%m/%Y').date()
+@app.template_filter('format_date')
+def format_date(d): return d.strftime("%d/%m/%Y")
+
+@app.before_request
+def authorize():
+  user = users.get_current_user()
+  if not user or user.email() not in usr_autorizados: raise Exception('Usuario invalido')
 
 @app.route('/', methods=['GET'])
 def index(): return render_template('index.html')

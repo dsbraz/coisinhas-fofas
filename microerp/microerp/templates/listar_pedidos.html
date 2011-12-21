@@ -18,7 +18,7 @@
 	</tr>
 	{% for pedido in pedidos %}
 		<tr class="{% if pedido.finalizado() %} pedido_finalizado {% endif %}">
-			<td><a href='/pedido/{{ pedido.key() }}'>{{ pedido.data_entrega_formatada() }}</a></td>
+			<td><a href='/pedido/{{ pedido.key() }}'>{{ pedido.data_entrega|format_date }}</a></td>
 			<td>{{ pedido.valor }}</td>
 			<td><a href='/cliente/{{ pedido.cliente.key() }}'>{{ pedido.cliente.nome }}</a></td>
 			<td>{% if pedido.finalizado() %} Sim {% else %} N&atilde;o {% endif %}</td>
