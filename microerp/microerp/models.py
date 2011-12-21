@@ -9,6 +9,7 @@ class Cliente(db.Model):
   im = db.StringProperty()
   endereco = db.PostalAddressProperty(required=True)
   observacao = db.TextProperty()
+  def tem_pedidos(self): return self.pedidos.get() is not None
 
 class Producao(db.Model):
   arte_pronta = db.BooleanProperty(default=False)
