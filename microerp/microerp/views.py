@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash, request_started
 from models import Cliente, Pedido, Producao, Entrega, cliente_key, pedido_key
 from google.appengine.api import users
-from microerp import app, usr_autorizados
+from microerp import app, usuarios_autorizados
 from datetime import datetime
 
 def date_from_str(str_date): return datetime.strptime(str_date, '%d/%m/%Y').date()
