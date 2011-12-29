@@ -6,35 +6,8 @@
 
 <h1>Editar Pedido</h1>
 
-<form action='/pedido/{{ pedido.key() }}/editar' method='POST'>
+<form action='/pedido/{{ chave }}/editar' method='POST'>
 	{% include '_cadastro_pedido.html' %}
 </form>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#cliente").val("{{ pedido.cliente.key() }}");
-		$("#descricao").val("{{ pedido.descricao }}");
-		$("#valor").val("{{ pedido.valor }} ");
-		$("#data_entrega").val("{{ pedido.data_entrega|format_date }}");
-		{% if pedido.pago %}
-			$("#pago").attr("checked", "checked");
-		{% endif %}
-		{% if pedido.producao.arte_pronta %}
-			$("#arte_pronta").attr("checked", "checked");
-		{% endif %}
-		{% if pedido.producao.impresso %}
-			$("#impresso").attr("checked", "checked");
-		{% endif %}
-		{% if pedido.producao.montado %}
-			$("#montado").attr("checked", "checked");
-		{% endif %}
-		{% if pedido.entrega.enviado %}
-			$("#enviado").attr("checked", "checked");
-		{% endif %}
-		{% if pedido.entrega.recebido %}
-			$("#recebido").attr("checked", "checked");
-		{% endif %}
-	});
-</script>
 
 {% endblock %}

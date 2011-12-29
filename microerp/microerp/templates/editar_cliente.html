@@ -6,20 +6,8 @@
 
 <h1>Editar Cliente</h1>
 
-<form action='/cliente/{{ cliente.key() }}/editar' method='POST'>
+<form action='/cliente/{{ chave }}/editar' method='POST'>
 	{% include '_cadastro_cliente.html' %}
 </form>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#nome").val("{{ cliente.nome }}");
-		$("#telefone").val("{{ cliente.telefone }}");
-		$("#celular").val("{{ cliente.celular }}");
-		$("#email").val("{{ cliente.email }}");
-		$("#im").val("{{ cliente.im }}");
-		$("#endereco").val("{{ cliente.endereco }}");
-		$("#observacao").val("{{ cliente.observacao }}");
-	});
-</script>
 
 {% endblock %}

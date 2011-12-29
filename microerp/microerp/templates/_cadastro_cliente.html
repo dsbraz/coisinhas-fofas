@@ -1,18 +1,13 @@
+{% from "_formhelpers.html" import render_field %}
+
 <p>
-	<label for='nome'>Nome</label>
-	<input type='text' id='nome' name='nome' value=''></br>
-	<label for='telefone'>Telefone</label>
-	<input type='text' id='telefone' name='telefone' value=''></br>
-	<label for='celular'>Celular</label>
-	<input type='text' id='celular' name='celular' value=''></br>
-	<label for='email'>Email</label>
-	<input type='text' id='email' name='email' value=''></br>
-	<label for='im'>IM</label>
-	<input type='text' id='im' name='im' value=''></br>
-	<label for='endereco'>Endere&ccedil;o</label>
-	<input type='text' id='endereco' name='endereco' value=''></br>
-	<label for='observacao'>Observa&ccedil;&atilde;o</label>
-	<input type='text' id='observacao' name='observacao' value=''>
+	{{ render_field(form.nome) }}
+	{{ render_field(form.telefone) }}
+	{{ render_field(form.celular) }}
+	{{ render_field(form.email) }}
+	{{ render_field(form.im) }}
+	{{ render_field(form.endereco) }}
+	{{ render_field(form.observacao) }}
 </p>
 
 <p>

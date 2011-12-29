@@ -8,8 +8,8 @@
         <script type="text/javascript" src="/static/jquery-ui-1.8.16.custom.min.js"></script>
         <title>MicroERP - {% block title %} {% endblock %}</title>
     </head>
-    <body id="">
-		<div class="menu">
+    <body>
+		<div id="menu">
 			<span>&nbsp;</span>
 			<a href='/'>In&iacute;cio</a>
 			<span>|</span>
@@ -18,10 +18,10 @@
 			<a href='/pedido'>Pedidos</a>
 		</div>
 		</br>
-		<div class="message">
+		<div id="message">
 			{% with messages = get_flashed_messages() %}
 		  		{% if messages %}
-		    		<ul class=flashes>
+		    		<ul class="flashes">
 		    			{% for message in messages %}
 		      			<li>{{ message }}</li>
 		    			{% endfor %}
@@ -29,9 +29,12 @@
 		  		{% endif %}
 			{% endwith %}
 		</div>
-		<div class="content">
+		<div id="content">
         	{% block content %}
         	{% endblock %}
+		</div>
+		<div id="footer">
+			<p>SACI Labs 2011</p>
 		</div>
     </body>
 </html>

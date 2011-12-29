@@ -1,7 +1,7 @@
 body {
 	font-family: Verdana, Helvetica, sans-serif;
 	font-size: 14px;
-	background-color: #EEEEEE;
+	background-color: #E0ECF8;
 }
 
 h1 {
@@ -20,27 +20,42 @@ table {
 }
 
 th {
-	background-color: #CCCCCC;
+	background-color: #81BEF7;
 }
 
-.menu {
+label {
+   display: block;
+   float: left;
+   padding-top: 3px;
+}
+
+#menu {
 	line-height:2em;
 	vertical-align:middle;
 	font-size: 16px;
-	background-color: #CCCCCC;
+	background-color: #81BEF7;
 }
 
-.message {
+#message {
 	color: red;	
 }
 
-.content {
+#content {
+}
+
+#footer {
+	text-align:right;
+	line-height:2em;
+	vertical-align:middle;
+	font-size: 10px;
+	font-weight: bold;
+	background-color: #81BEF7;
 }
 
 .action_column {
-	background-color: #EEEEEE;
+	background-color: #E0ECF8;
 }
 
 .pedido_finalizado {
-	background-color: #DDDDDD;	
+	background-color: #F5D0A9;	
 }

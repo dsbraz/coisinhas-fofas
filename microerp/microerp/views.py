@@ -1,10 +1,9 @@
 from flask import render_template, request, redirect, url_for, flash, request_started
 from models import Cliente, Pedido, Producao, Entrega, cliente_key, pedido_key
+from forms import ClienteForm, PedidoForm
 from google.appengine.api import users
 from microerp import app, usuarios_autorizados
 from datetime import datetime
-
-def date_from_str(str_date): return datetime.strptime(str_date, '%d/%m/%Y').date()
 
 @app.template_filter('format_date')
 def format_date(d): return d.strftime("%d/%m/%Y")
@@ -36,53 +35,43 @@ def detalhar_cliente(chave):
 
 @app.route('/cliente/<chave>/editar', methods=['GET', 'POST'])
 def editar_cliente(chave):
-  if request.method == 'GET':
-    cliente = Cliente.get(chave)
-    return render_template('editar_cliente.html', cliente=cliente)
-  else:
-    cliente = Cliente.get(chave)
-    cliente.nome = request.form['nome']
-    cliente.telefone = request.form['telefone']
-    cliente.celular = request.form['celular']
-    cliente.email = request.form['email']
-    cliente.im = request.form['im']
-    cliente.endereco = request.form['endereco']
-    cliente.observacao = request.form['observacao']
+  cliente = Cliente.get(chave)
+  form = ClienteForm(request.form, cliente)
+  if request.method == 'POST' and form.validate():
+    form.populate_obj(cliente)
     cliente.put()
     flash('Cliente alterado com sucesso!')
     return redirect(url_for('listar_clientes'))
+  return render_template('editar_cliente.html', chave=chave, form=form)
 
 @app.route('/cliente/<chave>/excluir', methods=['GET', 'POST'])
 def excluir_cliente(chave):
-  if request.method == 'GET':
-    cliente = Cliente.get(chave)
-    return render_template('excluir_cliente.html', cliente=cliente)
-  else:
-    cliente = Cliente.get(chave)
-    if cliente.tem_pedidos():
-      flash('Cliente nao pode ser excluido, pois possui pedido(s) associado(s)')
-      return render_template('excluir_cliente.html', cliente=cliente)
-    cliente.delete()
-    flash('Cliente excluido com sucesso!')
-    return redirect(url_for('listar_clientes'))
+  cliente = Cliente.get(chave)
+  if request.method == 'POST':
+    if not cliente.tem_pedidos():
+      cliente.delete()
+      flash('Cliente excluido com sucesso!')
+      return redirect(url_for('listar_clientes'))
+    flash('Cliente nao pode ser excluido, pois possui pedido(s) associado(s)')
+  return render_template('excluir_cliente.html', cliente=cliente)
 
 @app.route('/cliente/novo', methods=['GET', 'POST'])
 def novo_cliente():
-  if request.method == 'GET':
-    return render_template('novo_cliente.html')
-  else:
+  form = ClienteForm(request.form)
+  if request.method == 'POST' and form.validate():
     Cliente(
       parent = cliente_key(),
-      nome = request.form['nome'],
-      telefone = request.form['telefone'],
-      celular = request.form['celular'],
-      email = request.form['email'],
-      im = request.form['im'],
-      endereco = request.form['endereco'],
-      observacao = request.form['observacao']
+      nome = form.nome.data,
+      telefone = form.telefone.data,
+      celular = form.celular.data,
+      email = form.email.data,
+      im = form.im.data,
+      endereco = form.endereco.data,
+      observacao = form.observacao.data
     ).put()
     flash('Cliente criado com sucesso!')
     return redirect(url_for('listar_clientes'))
+  return render_template('novo_cliente.html', form=form)
 
 @app.route('/pedido', methods=['GET'])
 def listar_pedidos():
@@ -97,72 +86,52 @@ def detalhar_pedido(chave):
 
 @app.route('/pedido/<chave>/excluir', methods=['GET', 'POST'])
 def excluir_pedido(chave):
-  if request.method == 'GET':
-    pedido = Pedido.get(chave)
-    return render_template('excluir_pedido.html', pedido=pedido)
-  else:
+  pedido = Pedido.get(chave)
+  if request.method == 'POST':
     pedido = Pedido.get(chave)
     pedido.producao.delete()
     pedido.entrega.delete()
     pedido.delete()
     flash('Pedido excluido com sucesso!')
     return redirect(url_for('listar_pedidos'))
+  return render_template('excluir_pedido.html', pedido=pedido)
 
 @app.route('/pedido/<chave>/editar', methods=['GET', 'POST'])
 def editar_pedido(chave):
-  if request.method == 'GET':
-    pedido = Pedido.get(chave)
-    clientes_query = Cliente.all().ancestor(cliente_key()).order('nome')
-    clientes = clientes_query.run()
-    return render_template('editar_pedido.html', pedido=pedido, clientes=clientes)
-  else:
-    pedido = Pedido.get(chave)
-    pedido.cliente = Cliente.get(request.form['cliente'])
-    pedido.descricao = request.form['descricao']
-    pedido.valor = request.form['valor']
-    pedido.data_entrega = date_from_str(request.form['data_entrega'])
-    pedido.pago = request.form['pago'] == 'S'
+  pedido = Pedido.get(chave)
+  form = PedidoForm(request.form, pedido)
+  if request.method == 'POST' and form.validate():
+    form.populate_obj(pedido)
+    pedido.producao.put()
+    pedido.entrega.put()
     pedido.put()
-
-    producao = pedido.producao
-    producao.arte_pronta = request.form['arte_pronta'] == 'S'
-    producao.impresso = request.form['impresso'] == 'S'
-    producao.montado = request.form['montado'] == 'S'
-    producao.put()
-
-    entrega = pedido.entrega
-    entrega.enviado = request.form['enviado'] == 'S'
-    entrega.recebido = request.form['recebido'] == 'S'
-    entrega.put()
-
     flash('Pedido alterado com sucesso!')
     return redirect(url_for('listar_pedidos'))
+  return render_template('editar_pedido.html', chave=chave, form=form)
 
 @app.route('/pedido/novo', methods=['GET', 'POST'])
 def novo_pedido():
-  if request.method == 'GET':
-    clientes_query = Cliente.all().ancestor(cliente_key()).order('nome')
-    clientes = clientes_query.run()
-    return render_template('novo_pedido.html', clientes=clientes)
-  else:
+  form = PedidoForm(request.form)
+  if request.method == 'POST' and form.validate():
     Pedido(
       parent = pedido_key(),
-      cliente = Cliente.get(request.form['cliente']),
-      descricao = request.form['descricao'],
-      valor = request.form['valor'],
-      data_entrega = date_from_str(request.form['data_entrega']),
-      pago = request.form['pago'] == 'S',
+      cliente = form.cliente.data,
+      descricao = form.descricao.data,
+      valor = form.valor.data,
+      data_entrega = form.data_entrega.data,
+      pago = form.pago.data,
       producao = Producao(
         parent = pedido_key(),
-        arte_pronta = request.form['arte_pronta'] == 'S',
-        impresso = request.form['impresso'] == 'S',
-        montado = request.form['montado'] == 'S'
+        arte_pronta = form.producao.arte_pronta.data,
+        impresso = form.producao.impresso.data,
+        montado = form.producao.montado.data
       ).put(),
       entrega = Entrega(
         parent = pedido_key(),
-        enviado = request.form['enviado'] == 'S',
-        recebido = request.form['recebido'] == 'S'
+        enviado = form.entrega.enviado.data,
+        recebido = form.entrega.recebido.data
       ).put()
     ).put()
     flash('Pedido criado com sucesso!')
     return redirect(url_for('listar_pedidos'))
+  return render_template('novo_pedido.html', form=form)
