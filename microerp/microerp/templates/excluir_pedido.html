@@ -8,7 +8,7 @@
 
 {% include '_detalhe_pedido.html' %}
 
-<form action='/pedido/{{ pedido.key() }}/excluir' method='POST'>
+<form action='/pedido/{{ pedido.key() }}/excluir' method='DELETE'>
 	<input type=submit value='Excluir'>
 </form>
 
