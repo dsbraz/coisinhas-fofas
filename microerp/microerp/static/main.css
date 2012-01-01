@@ -23,12 +23,6 @@ th {
 	background-color: #81BEF7;
 }
 
-label {
-   display: block;
-   float: left;
-   padding-top: 3px;
-}
-
 #menu {
 	line-height:2em;
 	vertical-align:middle;
