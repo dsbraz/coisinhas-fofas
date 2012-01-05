@@ -33,21 +33,21 @@ def detalhar_cliente(chave):
   cliente = Cliente.get(chave)
   return render_template('detalhar_cliente.html', cliente=cliente)
 
-@app.route('/cliente/<chave>/editar', methods=['GET', 'PUT'])
+@app.route('/cliente/<chave>/editar', methods=['GET', 'POST'])
 def editar_cliente(chave):
   cliente = Cliente.get(chave)
   form = ClienteForm(request.form, cliente)
-  if request.method == 'PUT' and form.validate():
+  if request.method == 'POST' and form.validate():
     form.populate_obj(cliente)
     cliente.put()
     flash('Cliente alterado com sucesso!')
     return redirect(url_for('listar_clientes'))
   return render_template('editar_cliente.html', chave=chave, form=form)
 
-@app.route('/cliente/<chave>/excluir', methods=['GET', 'DELETE'])
+@app.route('/cliente/<chave>/excluir', methods=['GET', 'POST'])
 def excluir_cliente(chave):
   cliente = Cliente.get(chave)
-  if request.method == 'DELETE':
+  if request.method == 'POST':
     if not cliente.tem_pedidos():
       cliente.delete()
       flash('Cliente excluido com sucesso!')
@@ -84,10 +84,10 @@ def detalhar_pedido(chave):
   pedido = Pedido.get(chave)
   return render_template('detalhar_pedido.html', pedido=pedido)
 
-@app.route('/pedido/<chave>/excluir', methods=['GET', 'DELETE'])
+@app.route('/pedido/<chave>/excluir', methods=['GET', 'POST'])
 def excluir_pedido(chave):
   pedido = Pedido.get(chave)
-  if request.method == 'DELETE':
+  if request.method == 'POST':
     pedido = Pedido.get(chave)
     pedido.producao.delete()
     pedido.entrega.delete()

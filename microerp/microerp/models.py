@@ -4,11 +4,11 @@ from google.appengine.api import users
 # Entity
 class Cliente(db.Model):
   nome = db.StringProperty(required=True)
-  telefone = db.PhoneNumberProperty()
-  celular = db.PhoneNumberProperty()
+  telefone = db.StringProperty()
+  celular = db.StringProperty()
   email = db.EmailProperty(required=True)
   im = db.StringProperty()
-  endereco = db.PostalAddressProperty(required=True)
+  endereco = db.StringProperty(required=True)
   observacao = db.TextProperty()
   def tem_pedidos(self): return self.pedidos.get() is not None
 
